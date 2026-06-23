@@ -16,18 +16,26 @@ env/
 .env
 *.local
 
-# --- Data & models (tracked by DVC, not git) ---
-data/raw/*
-data/interim/*
-data/processed/*
-data/external/*
-models/*
-!**/.gitkeep
+# --- Data & model artifacts: tracked by DVC, never committed to git ---
+# Ignore heavy artifacts BY TYPE. DVC's own *.dvc pointer files and the
+# per-directory .gitignore files it generates are NOT matched here, so they
+# stay tracked in git and let anyone `dvc pull` the real data.
 *.csv
+*.tsv
 *.parquet
+*.feather
 *.pkl
 *.joblib
+*.h5
+*.hdf5
 *.zip
+*.gz
+# Trained model binaries (keep *.dvc pointers tracked)
+models/*.txt
+models/*.json
+models/*.cbm
+models/*.ubj
+models/*.bin
 
 # --- Experiment tracking ---
 mlruns/

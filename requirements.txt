@@ -13,3 +13,4 @@ evidently>=0.4.30
 matplotlib>=3.8
 python-dotenv>=1.0
 pydantic>=2.6
+ucimlrepo>=0.0.7
