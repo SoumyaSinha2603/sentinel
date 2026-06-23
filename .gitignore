@@ -1,0 +1,49 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.ipynb_checkpoints/
+
+# --- Virtual envs ---
+.venv/
+venv/
+env/
+
+# --- Environment / secrets ---
+.env
+*.local
+
+# --- Data & models (tracked by DVC, not git) ---
+data/raw/*
+data/interim/*
+data/processed/*
+data/external/*
+models/*
+!**/.gitkeep
+*.csv
+*.parquet
+*.pkl
+*.joblib
+*.zip
+
+# --- Experiment tracking ---
+mlruns/
+mlartifacts/
+.dvc/cache/
+.dvc/tmp/
+
+# --- Tooling caches ---
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+htmlcov/
+.coverage
+
+# --- IDE / OS ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

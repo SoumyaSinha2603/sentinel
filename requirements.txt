@@ -1,0 +1,15 @@
+# Core runtime dependencies (direct deps only; floors chosen for Python 3.10).
+# After installing, we will freeze exact versions into requirements.lock.
+numpy>=1.26
+pandas>=2.1
+scikit-learn>=1.4
+lightgbm>=4.3
+xgboost>=2.0
+shap>=0.45
+dice-ml>=0.11
+mlflow>=2.12
+dvc>=3.50
+evidently>=0.4.30
+matplotlib>=3.8
+python-dotenv>=1.0
+pydantic>=2.6
