@@ -93,9 +93,17 @@ docs/           competitive_landscape.md and design notes
   `reports/leakage_audit.md`. Smell test honest: top single-feature AUROC 0.607, nothing
   >0.70 (no leakage). Death/hospice discharge dispositions {11,13,14,19,20} flagged
   (~2,423 encounters) plus 15 near-constant drug columns — reported only, NOT dropped.
-- NEXT: **cohort-definition decision** (human) — decide whether to exclude the flagged
-  death/hospice encounters (and how to treat the near-constant columns) before any
-  modeling. The audit reports; the cohort cut is a human call.
+- Cohort definition: **DONE.** Decisions locked and implemented in
+  `src/sentinel/data/cohort.py` (`build_cohort`, pure raw → modeling-cohort transform,
+  runs before the split harness). (1) Removed death/hospice encounters
+  (`discharge_disposition_id` ∈ {11,13,14,19,20,21}); (2) dropped only zero-variance
+  columns (`examide`, `citoglipton`) — near-constant columns kept; (3) all eligible
+  encounters is the primary cohort, `first_encounter_only=True` is an optional
+  sensitivity mode. `discharge_disposition_id` retained as a feature. Default cohort:
+  **99,343 rows / 69,990 patients / 11.39% `<30` prevalence** (2,423 removed, only 43 of
+  them positives). Summary at `reports/cohort_summary.md`.
+- NEXT: feature engineering / preprocessing on the locked cohort (encoding, missing-value
+  handling) — first feature-engineering work, out of scope for the cohort builder.
 
 ## How to work in this repo
 
