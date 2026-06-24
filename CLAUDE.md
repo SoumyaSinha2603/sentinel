@@ -86,8 +86,16 @@ docs/           competitive_landscape.md and design notes
 
 - Phase 0 (Weeks 1–2), foundations & anti-leakage. DONE: repo scaffold, tooling, CI,
   locked env, DVC init, dataset loaded + validated + DVC-tracked.
-- NEXT: Week-2 leakage audit — the locked grouped-by-`patient_nbr` evaluation harness and
-  the leakage-check script (`src/sentinel/data/leakage_checks.py`, currently a stub).
+- Week-2 leakage audit: **DONE.** Locked patient-grouped evaluation harness
+  (`src/sentinel/evaluation/splits.py`, frozen — `GroupShuffleSplit` holdout +
+  `StratifiedGroupKFold` folds, seed=42, patient-disjoint asserted structurally). Read-only
+  leakage audit (`src/sentinel/data/leakage_checks.py`) run clean → report at
+  `reports/leakage_audit.md`. Smell test honest: top single-feature AUROC 0.607, nothing
+  >0.70 (no leakage). Death/hospice discharge dispositions {11,13,14,19,20} flagged
+  (~2,423 encounters) plus 15 near-constant drug columns — reported only, NOT dropped.
+- NEXT: **cohort-definition decision** (human) — decide whether to exclude the flagged
+  death/hospice encounters (and how to treat the near-constant columns) before any
+  modeling. The audit reports; the cohort cut is a human call.
 
 ## How to work in this repo
 

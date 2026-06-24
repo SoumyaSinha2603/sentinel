@@ -8,7 +8,7 @@ def test_version():
 
 
 def test_config_paths_resolve():
-    from sentinel.config import ROOT, RAW_DIR
+    from sentinel.config import RAW_DIR, ROOT
 
     assert ROOT.exists()
     assert RAW_DIR.name == "raw"
