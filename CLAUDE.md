@@ -102,8 +102,21 @@ docs/           competitive_landscape.md and design notes
   sensitivity mode. `discharge_disposition_id` retained as a feature. Default cohort:
   **99,343 rows / 69,990 patients / 11.39% `<30` prevalence** (2,423 removed, only 43 of
   them positives). Summary at `reports/cohort_summary.md`.
-- NEXT: feature engineering / preprocessing on the locked cohort (encoding, missing-value
-  handling) — first feature-engineering work, out of scope for the cohort builder.
+- Baseline + metrics layer: **DONE.** Reusable, model-agnostic metrics
+  (`src/sentinel/evaluation/metrics.py`: AUROC/AUPRC/Brier, quantile-binned ECE +
+  reliability points, prevalence, plot helpers) reused by every later model. Two floor
+  baselines (`src/sentinel/models/baseline.py`) through the frozen harness on the default
+  cohort, MLflow-logged to `./mlruns`. Honest floor confirmed — **no leakage alarm**:
+  - trivial constant: AUROC 0.500, AUPRC 0.112 (= prevalence).
+  - logistic (8 safe numeric features, balanced): test **AUROC 0.6267**, AUPRC 0.1937;
+    CV **AUROC 0.6336 ± 0.0075**, AUPRC 0.1986 ± 0.0086. In the expected ~0.60-0.66 band.
+  - Calibration poor by design (ECE 0.366) — `class_weight="balanced"` inflates
+    probabilities; expected for a floor, motivates the later calibration layer.
+  - Results: `reports/baseline_results.md`; figures in `reports/figures/`.
+  - **0.627 is the number every future model must beat.** Anything near/above ~0.85 is a
+    leakage alarm, not a win (the runner enforces this).
+- NEXT: feature engineering / preprocessing on the locked cohort (categorical encoding,
+  missing-value handling, diagnosis-code grouping) — first feature-engineering work.
 
 ## How to work in this repo
 
