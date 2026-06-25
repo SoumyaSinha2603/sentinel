@@ -179,7 +179,38 @@ docs/           competitive_landscape.md and design notes
 - [registry] mlruns/ is gitignored / local file store only. Deployed API needs a
   persistent backend (sqlite local, remote for deploy). Binary reproduces via register.py.
 
-## NEXT: PHASE 2 — TRUST LAYER I (calibration + clinical utility)
+## Current state — PHASE 2, calibration step DONE
 
-- Fix ECE 0.334 (from class_weight=balanced). Holdout is spent, so calibration needs
-  its own evaluation surface carved from inside the 80% train (grouped by patient).
+- Calibrator FIT + SELECTED + REGISTERED. Code: `src/sentinel/calibration/`
+  (`calibration_splits.py` helper — does NOT touch frozen `splits.py`; `fit_calibrators.py`
+  entrypoint, `python -m sentinel.calibration.fit_calibrators`). Report:
+  `reports/calibration_results.md`; figure `reports/figures/reliability_before_after.png`.
+- Phase-2 surfaces carved from INSIDE the 80% train (holdout spent, never loaded — only
+  its patients identified to ASSERT exclusion). Patient-grouped, seed=42:
+  S_eval (20% of 80%, FROZEN, fits nothing, looked at once), S_fit (80%) → S_cal (25%) /
+  S_train (75%). Pairwise patient-disjoint across {S_train,S_cal,S_eval,holdout}; per-surface
+  patient sha256 hashes locked in the manifest.
+- OOF on S_fit (5-fold grouped, LOCKED params): AUROC 0.6713 / AUPRC 0.2229 — honest, no
+  tripwire (<0.72). Sibling CVs: cal_booster_Sfit 0.6713, cal_booster_Strain 0.6659.
+- OOF-vs-prod score GATE **PASS** (KS 0.0157 ≤ 0.05, max decile |Δ| 0.0090 ≤ 0.02) →
+  deployment base = @phase1 booster; calibrator fit on S_fit OOF, applied on @phase1 scores.
+  (@phase1 is in-sample on S_eval — gate is distributional, recorded verbatim.)
+- Selection pre-registered (lowest S_eval ECE; Brier tie-break; reject non-monotone). Both
+  reported. **Winner: isotonic.** S_eval ECE **0.3305 → 0.0264**, Brier 0.2039 → 0.0917
+  (Platt 0.0272 / 0.0919 — close second). Discrimination unchanged (calibration is monotone).
+- class_weight diagnostic (read-only, registers nothing): unweighted LGBM native S_eval ECE
+  **0.0076** vs balanced 0.334, CV AUROC 0.6722 (ranking unchanged) — confirms the BALANCED
+  weighting, not the features, inflates probabilities; calibration is the principled fix.
+- Persisted (committed): `models/calibration/calibrator.joblib` (added a `.gitignore`
+  negation — `*.joblib` is globally ignored) + `models/calibration/calibrator_manifest.json`
+  (PORTABLE isotonic knots so Phase 4 never unpickles, gate, both methods' S_eval ECE/Brier,
+  split hashes, seed, sklearn/lightgbm versions, git sha). Registered
+  `sentinel-readmission@phase2-calibrated` (new version) with joblib+manifest as artifacts.
+- Phase-4 loader (intended): pyfunc reads the manifest, reconstructs the map from the
+  portable form, asserts sklearn version, applies AFTER the booster (and casts category
+  dtypes — the existing serving prereq below).
+
+## NEXT: PHASE 2 — TRUST LAYER I (remaining: clinical utility)
+
+- Calibration done (above). Remaining Phase-2 work: decision-curve analysis (DCA) +
+  precision@k on the FROZEN S_eval surface (same patient-disjoint surface, still un-fit).
