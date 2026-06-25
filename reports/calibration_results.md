@@ -67,3 +67,29 @@ An UNWEIGHTED LightGBM (LOCKED params, `class_weight=None`) on S_fit gives CV AU
 - Registered `sentinel-readmission` v2 alias `@phase2-calibrated` (run `51758b956ab446c1a44c5a2fe68d0f35`).
 
 Phase 4's pyfunc wrapper (already planned to cast category dtypes) is the intended loader: it reads `calibrator_manifest.json`, reconstructs the map from the portable form, asserts the sklearn version, and applies it AFTER the booster call.
+
+## W5 verification (read-only, post-commit)
+
+Two read-only checks on the already-committed artifacts before merge. No refit, no
+re-registration, no model change; the holdout was not loaded.
+
+**Check 1 — reliability step-artifact inspection.** Isotonic won by a noise-level margin
+(ECE 0.0264 vs Platt 0.0272), so the figure was inspected to confirm it is not winning
+while visibly worse-behaved. On `reports/figures/reliability_before_after.png` the isotonic
+(S_eval) curve is **monotone and smooth across all bins, with no flat steps or reversals**,
+including the high-probability tail (rightmost bin ~0.27 mean-pred). It tracks the Platt
+curve almost exactly. Verdict: **isotonic clean, no pathological stepping** — selection
+unchanged, no model-card caveat needed.
+
+**Check 2 — committed artifact == registered v2 fit (no drift).** `mlruns/` is gitignored,
+so the committed `models/calibration/{calibrator.joblib, calibrator_manifest.json}` is the
+real Phase-4 loader path. On a fixed probe vector `np.linspace(0, 1, 1001)`:
+
+| comparison | max abs diff | result |
+|---|---:|---|
+| committed joblib vs committed manifest (portable knots) | `0.000e+00` | **PASS** |
+| committed joblib vs registered v2 logged artifact | `0.000e+00` | identical (no drift) |
+
+The committed binary and the committed portable manifest are the **same map** (the manifest
+is what Phase 4 reconstructs from, so they must agree), and the registry v2 artifact matches
+both — nothing drifted between fit, registration, and commit.
