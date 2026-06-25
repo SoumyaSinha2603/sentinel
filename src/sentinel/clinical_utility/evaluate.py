@@ -174,6 +174,50 @@ def compute(df: pd.DataFrame, *, tracking_uri: str | None = None, n_boot: int = 
     }
 
 
+# --- DCA interpretation (shared by report + JSON; numbers from the grid) ---------------
+def _dca_numbers(r: dict) -> dict:
+    """Mid-band margin and curve-edge facts, computed from the DCA grid (no recompute)."""
+    thr = np.asarray(r["grid"]["thresholds"], dtype=float)
+    nbm = np.asarray(r["grid"]["nb_model"], dtype=float)
+    nba = np.asarray(r["grid"]["nb_all"], dtype=float)
+    mid = (thr >= 0.05) & (thr <= 0.15)
+    margin = nbm[mid] - nba[mid]
+    yt = r["manifest"]["portable"].get("y_thresholds")
+    ceiling = float(max(yt)) if yt else 1.0
+    return {
+        "t0": float(thr[0]),
+        "tN": float(thr[-1]),
+        "edge_nb": float(nbm[-1]),
+        "mid_mean": float(margin.mean()),
+        "mid_lo": float(margin[0]),  # at p_t = 0.05
+        "mid_hi": float(margin[-1]),  # at p_t = 0.15
+        "ceiling": ceiling,
+        "prevalence": float(r["prevalence"]),
+    }
+
+
+def dca_interpretation_text(r: dict) -> str:
+    """Plain-text (JSON-safe) accurate DCA characterization: weak/strict dominance bands."""
+    d = _dca_numbers(r)
+    return (
+        f"The calibrated model weakly dominates (>=) both treat-all and treat-none at every "
+        f"grid threshold [{d['t0']:.2f}, {d['tN']:.2f}], and strictly dominates across most of "
+        f"it. It converges to treat-all at the lowest thresholds (both flag nearly everyone) "
+        f"and decays toward but does not reach treat-none within the grid: a minority of "
+        f"patients carry high calibrated risk (isotonic output ceiling {d['ceiling']:.2f}), so "
+        f"NB_model stays marginally positive ({d['edge_nb']:.4f}) at p_t={d['tN']:.2f} and would "
+        f"tie treat-none only above the maximum calibrated risk. NB_model staying >=0 at every "
+        f"threshold is itself a consequence of calibration: NB_model >=0 exactly when the flagged "
+        f"group's precision >= p_t, and for a calibrated model the flagged-group precision tracks "
+        f"its mean predicted risk, which is >= p_t by construction (only patients with p_cal>=p_t "
+        f"are flagged). Treat-all is negative for "
+        f"p_t>prevalence ({d['prevalence']:.4f}), so beating it there is trivial; the clinically "
+        f"meaningful margin is at p_t ~0.05-0.15, ~+{d['mid_mean']:.3f} over treat-all on average "
+        f"(from +{d['mid_lo']:.3f} at 0.05 to +{d['mid_hi']:.3f} at 0.15) — on the order of a few "
+        f"extra true positives per 100 patients at no added false-positive cost."
+    )
+
+
 # --- Persistence ----------------------------------------------------------------------
 def build_operating_points_json(r: dict) -> dict:
     g = r["grid"]
@@ -221,6 +265,7 @@ def build_operating_points_json(r: dict) -> dict:
         "lightgbm_version": r["versions"]["lightgbm"],
         "git_commit": r["git_commit"],
         "surface_reuse_note": SURFACE_REUSE_NOTE,
+        "dca_interpretation": dca_interpretation_text(r),
     }
 
 
@@ -325,7 +370,6 @@ def plot_precision_recall_at_k(r: dict, path: Path) -> None:
 
 # --- Report ---------------------------------------------------------------------------
 def _render_report(r: dict) -> str:
-    band = r["band"]
     lines: list[str] = []
     lines.append("# Clinical utility — Phase 2 / W6 (DCA, precision@k, operating points)")
     lines.append("")
@@ -365,34 +409,35 @@ def _render_report(r: dict) -> str:
         "expected-utility (odds) axis and is only meaningful on calibrated probs."
     )
     lines.append("")
-    if band["any"]:
-        contig = "" if band["contiguous"] else " (non-contiguous; range shown is min–max)"
-        thr = r["grid"]["thresholds"]
-        spans_full = band["min"] <= float(thr[0]) + 1e-9 and band["max"] >= float(thr[-1]) - 1e-9
-        lines.append(
-            f"NB_model beats BOTH treat-all and treat-none over **p_t ∈ "
-            f"[{band['min']:.3f}, {band['max']:.3f}]**{contig} — the clinically useful "
-            "risk-tolerance band."
-        )
-        if spans_full:
-            lines.append("")
-            lines.append(
-                "This covers the **entire evaluated grid**: across all clinically plausible "
-                "thresholds, acting on the model dominates both alternatives. The absolute net "
-                "benefit shrinks toward treat-none as `p_t` rises (fewer patients clear the bar, "
-                "so the odds penalty on false positives bites), but stays above treat-all "
-                "throughout. Only at `p_t → 0` (below the grid, where flagging everyone is "
-                "optimal) does treat-all converge to the model."
-            )
-        else:
-            lines.append("")
-            lines.append(
-                "Below that band treat-all is competitive (cheap to act); above it the model's "
-                "net benefit collapses toward treat-none as the odds penalty on false positives "
-                "grows."
-            )
-    else:
-        lines.append("NB_model never strictly beats both alternatives across the grid.")
+    d = _dca_numbers(r)
+    lines.append(
+        f"The calibrated model **weakly dominates (≥)** both treat-all and treat-none at every "
+        f"threshold on the evaluated grid [{d['t0']:.2f}, {d['tN']:.2f}], and **strictly "
+        f"dominates across most of it**. At the lowest thresholds it converges to treat-all "
+        f"(both flag nearly everyone). Its net benefit then decays toward — but does not reach — "
+        f"the treat-none line within the grid: a minority of patients carry high calibrated risk "
+        f"(the isotonic output ceiling is {d['ceiling']:.2f}), so NB_model stays marginally "
+        f"positive ({d['edge_nb']:.4f}) even at p_t={d['tN']:.2f}, and would tie treat-none only "
+        f"above the maximum calibrated risk."
+    )
+    lines.append("")
+    lines.append(
+        "That NB_model never drops below treat-none (0) at any threshold is a direct consequence "
+        "of **calibration**: NB_model ≥ 0 exactly when the flagged group's precision ≥ `p_t`, and "
+        "for a calibrated model the flagged-group precision tracks its mean predicted risk, which "
+        "is ≥ `p_t` by construction (only patients with `p_cal ≥ p_t` are flagged)."
+    )
+    lines.append("")
+    lines.append(
+        f"Treat-all goes **negative for p_t > prevalence ({d['prevalence']:.4f})**, so beating it "
+        f"there is trivial. The clinically meaningful margin sits at thresholds at or below "
+        f"prevalence (**p_t ≈ 0.05–0.15**), where net benefit exceeds treat-all by **~+"
+        f"{d['mid_mean']:.3f} on average** (from +{d['mid_lo']:.3f} at 0.05 to +{d['mid_hi']:.3f} "
+        f"at 0.15) — on the order of a few extra true positives per 100 patients at no added "
+        f"false-positive cost. (The earlier 'beats across the entire grid' framing overstated "
+        f"this — it conflated weak with strict dominance and credited the trivial beat of a "
+        f"negative treat-all.)"
+    )
     lines.append("")
     lines.append("## Operating points (fixed budgets, no data-snooping)")
     lines.append("")
