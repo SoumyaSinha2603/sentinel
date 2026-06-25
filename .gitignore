@@ -37,6 +37,12 @@ models/*.cbm
 models/*.ubj
 models/*.bin
 
+# Phase-2 calibrator: committed deliberately (small, Phase-4-findable). The *.joblib
+# global rule above would otherwise ignore it; the portable JSON manifest beside it is
+# the version-checked source of truth, the joblib is the fitted-object companion.
+!models/calibration/
+!models/calibration/calibrator.joblib
+
 # --- Experiment tracking ---
 mlruns/
 mlartifacts/
