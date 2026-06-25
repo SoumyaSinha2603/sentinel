@@ -144,6 +144,18 @@ docs/           competitive_landscape.md and design notes
 - HOLDOUT DISCIPLINE (locked): the 20% grouped holdout may be IDENTIFIED via
   make_holdout_split to exclude it, but is NEVER scored until the single final
   Phase 1 evaluation.
-- NEXT: step 4 — tuned LightGBM (search WITHIN training-fold CV only; holdout stays
-  sealed). Then step 5: select + register + first_encounter_only sensitivity +
-  single final holdout number.
+- Step 4 — tuned LightGBM: **DONE.** Focused Optuna search (`src/sentinel/models/lgbm_tuned.py`,
+  60 TPE trials, 6 params, inner 3-fold grouped CV optimizing AUPRC; outer 5 frozen folds
+  scored once; holdout scored exactly once; n_estimators via early stopping → 193 trees;
+  `class_weight=balanced` fixed). Result: tuned **CV AUROC 0.676±0.005**, **HOLDOUT 0.677**
+  (gap −0.001 → no CV-overfit, sealed-holdout discipline held). Only **+0.004** over the
+  untuned gate — marginal by design, confirming the honest ~0.68 ceiling. **GATE PASS**,
+  well under 0.72. `first_encounter_only` sensitivity: AUROC 0.657 (−0.019 vs all-encounters)
+  — judged benign (less data + loss of prior-visit history; grouped splits already prevent
+  within-patient contamination), flagged for discussion not as leakage. ECE ~0.33 carried
+  forward (balanced weighting), motivating calibration. deps: `optuna>=4.9` pinned, lock
+  re-generated. Report: `reports/lgbm_tuned_results.md`. **0.677 holdout is the locked
+  Phase-1 performance number** — performance-chasing ends here.
+- NEXT: model selection + the trust layer (probability **calibration** — isotonic/Platt on
+  a held-in calibration split, NOT tuned for discrimination), then fairness/subgroup audit,
+  SHAP reason codes, and DiCE counterfactuals. No further metric chasing.
