@@ -115,11 +115,35 @@ docs/           competitive_landscape.md and design notes
   - Results: `reports/baseline_results.md`; figures in `reports/figures/`.
   - **0.627 is the number every future model must beat.** Anything near/above ~0.85 is a
     leakage alarm, not a win (the runner enforces this).
-- NEXT: feature engineering / preprocessing on the locked cohort (categorical encoding,
-  missing-value handling, diagnosis-code grouping) — first feature-engineering work.
+- Feature engineering + engineered-feature leakage re-audit: **DONE.** Deterministic,
+  target-free transform in `src/sentinel/features/build.py` (`build_features`,
+  `load_and_build`): ICD-9 Strack disease grouping, age→midpoint, medication-activity
+  counts, `total_prior_visits`, missingness→explicit categories (`weight` dropped),
+  coded ids as nominal categoricals. **47 features = 35 categorical + 12 numeric**
+  (reconciled structurally against the frozen harness; row count preserved; label-blind).
+  Leakage re-audit (`audit_engineered_features` in `leakage_checks.py`) →
+  `reports/leakage_audit_features.md`: verdict **CLEAN**, top single-feature CV AUROC
+  `number_inpatient` 0.607 (nothing >0.70). See the Phase-1 section below for the
+  LightGBM gate that follows.
 
 ## How to work in this repo
 
 - Default to small, reviewable changes. Propose a plan, get sign-off, then implement.
 - When unsure about a clinical/ML modeling choice, prefer the honest/conservative option
   and surface the tradeoff rather than optimizing a metric.
+
+## Current state (Phase 1, step 3 done — gate passed)
+- Untuned LightGBM through frozen harness: CV AUROC 0.672±0.005, AUPRC 0.227,
+  Brier 0.208, ECE 0.320. Clears LR baseline 0.634 by +0.038. GATE PASS.
+- 0.672 sits at the honest ~0.68 ceiling. Tuning chases ~0.005–0.01, NOT a step
+  change. Anything >=0.72 = leakage/overfit signal, stop.
+- Importances clinically coherent; no identifier-like feature dominating.
+  WATCH: discharge_disposition_id is rank-2 by gain — interrogate in Phase 3 SHAP
+  to confirm it's legit risk signal, not an administrative proxy.
+- ECE 0.320 is expected (class_weight=balanced); calibration deferred to trust layer.
+- HOLDOUT DISCIPLINE (locked): the 20% grouped holdout may be IDENTIFIED via
+  make_holdout_split to exclude it, but is NEVER scored until the single final
+  Phase 1 evaluation.
+- NEXT: step 4 — tuned LightGBM (search WITHIN training-fold CV only; holdout stays
+  sealed). Then step 5: select + register + first_encounter_only sensitivity +
+  single final holdout number.
