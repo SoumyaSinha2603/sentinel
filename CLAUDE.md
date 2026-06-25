@@ -156,6 +156,30 @@ docs/           competitive_landscape.md and design notes
   forward (balanced weighting), motivating calibration. deps: `optuna>=4.9` pinned, lock
   re-generated. Report: `reports/lgbm_tuned_results.md`. **0.677 holdout is the locked
   Phase-1 performance number** — performance-chasing ends here.
-- NEXT: model selection + the trust layer (probability **calibration** — isotonic/Platt on
-  a held-in calibration split, NOT tuned for discrimination), then fairness/subgroup audit,
-  SHAP reason codes, and DiCE counterfactuals. No further metric chasing.
+
+## Current state — PHASE 1 COMPLETE
+
+- Production model REGISTERED: sentinel-readmission v1, alias @phase1.
+  Refit on full 80% train, locked best params, 193 trees, seed=42. Round-trip
+  load-by-alias verified. Phase 4 API loads models:/sentinel-readmission@phase1.
+- Locked Phase-1 holdout (recorded, NOT recomputed): AUROC 0.677 / AUPRC 0.235 /
+  Brier 0.213 / ECE 0.334. Holdout now spent — do not re-score.
+- Provenance attached to the run: feature_contract.json, locked_holdout_metrics.json,
+  optuna_trials.csv. LOCKED_BEST_PARAMS / LOCKED_HOLDOUT_METRICS are single-source
+  constants in lgbm_tuned.py.
+- Full arc: 0.634 logistic → 0.672 untuned LGBM → 0.677 tuned holdout, at the honest
+  ~0.68 ceiling, CV–holdout gap −0.001. Discrimination LOCKED; probabilities NOT yet
+  trustworthy (ECE 0.334).
+
+## PHASE 4 PREREQUISITES (captured now, do NOT solve before then)
+
+- [serving] MLflow JSON serving drops pandas 'category' dtype → LightGBM categorical
+  spec mismatch. Model is fine (typed-DataFrame predict works). Fix: wrap booster in a
+  pyfunc whose predict casts incoming cols to declared categories before model call.
+- [registry] mlruns/ is gitignored / local file store only. Deployed API needs a
+  persistent backend (sqlite local, remote for deploy). Binary reproduces via register.py.
+
+## NEXT: PHASE 2 — TRUST LAYER I (calibration + clinical utility)
+
+- Fix ECE 0.334 (from class_weight=balanced). Holdout is spent, so calibration needs
+  its own evaluation surface carved from inside the 80% train (grouped by patient).

@@ -58,6 +58,24 @@ from sentinel.models.lgbm_baseline import (
 UNTUNED_CV_AUROC = 0.672
 UNTUNED_CV_AUPRC = 0.227
 
+# --- Locked Phase-1 result (single source of truth) ----------------------------------
+# Best params from the Phase-1 step-4 Optuna run (MLflow run "lgbm_tuned",
+# reports/lgbm_tuned_results.md), at full precision. ``n_estimators`` is the
+# early-stopping-derived tree count (193), NOT the sampled search cap (327). The
+# production refit (sentinel.models.register) imports THIS dict — do not re-type.
+LOCKED_BEST_PARAMS = {
+    "num_leaves": 41,
+    "min_child_samples": 68,
+    "learning_rate": 0.027333136696790394,
+    "n_estimators": 193,
+    "reg_alpha": 0.0016180450927017812,
+    "reg_lambda": 0.03571344592510516,
+}
+
+# Locked Phase-1 holdout metrics — RECORDED from the step-4 run, never recomputed (the
+# 20% holdout is spent). Attached as registry metadata in step 5, not re-scored.
+LOCKED_HOLDOUT_METRICS = {"auroc": 0.677, "auprc": 0.235, "brier": 0.213, "ece": 0.334}
+
 N_TRIALS = 60
 INNER_SPLITS = 3
 EARLY_STOPPING_ROUNDS = 50
