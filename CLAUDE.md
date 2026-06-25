@@ -237,8 +237,8 @@ docs/           competitive_landscape.md and design notes
   full k-grid curve, DCA grid w/ CI, prevalence, S_eval hash, seed, versions, git sha,
   surface-reuse note). NOT gitignored (`models/*.json` is one-level only). Phase-5 worklist
   UI + alert-burden control read this; mlruns/ not load-bearing.
-- BRANCH NOTE: this work is on `feat/phase2-clinical-utility`, STACKED on
-  `feat/phase2-calibration` (W5 was NOT merged to main). Rebase onto main once W5's PR lands.
+- BRANCH NOTE: W5 (PR #1) is SQUASH-MERGED to main (`4654e4e`). W6 lives on
+  `feat/phase2-clinical-utility` (rebased `--onto main`), pushed, open as PR #2 against main.
 
 ## NEXT: PHASE 2 / PHASE 3
 
