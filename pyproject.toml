@@ -26,6 +26,9 @@ known-first-party = ["sentinel"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-q"
+markers = [
+    "slow: marks tests as slow (data/model-backed; deselect with '-m \"not slow\"')",
+]
 
 [tool.coverage.run]
 source = ["src/sentinel"]

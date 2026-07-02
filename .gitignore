@@ -43,6 +43,11 @@ models/*.bin
 !models/calibration/
 !models/calibration/calibrator.joblib
 
+# Phase-3 fairness audit tables: committed deliberately (small, provenance-bearing).
+# The models/*.json global rule above would otherwise ignore them.
+!models/fairness/
+!models/fairness/*.json
+
 # --- Experiment tracking ---
 mlruns/
 mlartifacts/
