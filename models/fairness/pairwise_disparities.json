@@ -1,0 +1,1193 @@
+{
+  "attributes": {
+    "race": {
+      "tier": "primary",
+      "pairs": {
+        "Caucasian__vs__AfricanAmerican": {
+          "auroc": {
+            "diff": 0.024977,
+            "ci": [
+              -0.006149,
+              0.059444
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.05,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "tpr": {
+            "diff": -0.050541,
+            "ci": [
+              -0.128942,
+              0.02755
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.1,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "fpr": {
+            "diff": -0.029586,
+            "ci": [
+              -0.050044,
+              -0.010528
+            ],
+            "ci_excludes_zero": true,
+            "practical_threshold": 0.1,
+            "n_eff": 2000,
+            "verdict": "flag"
+          },
+          "ece": {
+            "diff": 0.008235,
+            "ci": [
+              -0.004798,
+              0.015621
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.03,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "four_fifths_tpr": 0.8762,
+          "four_fifths_fpr": 0.7568,
+          "four_fifths_selection_rate": 0.785
+        }
+      },
+      "verdict": {
+        "per_metric": {
+          "auroc": "PASS",
+          "tpr": "PASS",
+          "fpr": "FLAG (monitor)",
+          "ece": "PASS"
+        },
+        "overall": "FLAG (monitor)"
+      }
+    },
+    "gender": {
+      "tier": "primary",
+      "pairs": {
+        "Male__vs__Female": {
+          "auroc": {
+            "diff": -0.023925,
+            "ci": [
+              -0.050029,
+              5.7e-05
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.05,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "tpr": {
+            "diff": -0.049552,
+            "ci": [
+              -0.108481,
+              0.010166
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.1,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "fpr": {
+            "diff": 0.001632,
+            "ci": [
+              -0.01277,
+              0.014306
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.1,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "ece": {
+            "diff": -0.008119,
+            "ci": [
+              -0.01585,
+              0.001388
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.03,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "four_fifths_tpr": 0.8726,
+          "four_fifths_fpr": 1.0171,
+          "four_fifths_selection_rate": 0.9621
+        }
+      },
+      "verdict": {
+        "per_metric": {
+          "auroc": "PASS",
+          "tpr": "PASS",
+          "fpr": "PASS",
+          "ece": "PASS"
+        },
+        "overall": "PASS"
+      }
+    },
+    "age": {
+      "tier": "primary",
+      "pairs": {
+        "80+__vs__40-60": {
+          "auroc": {
+            "diff": -0.085538,
+            "ci": [
+              -0.119885,
+              -0.04812
+            ],
+            "ci_excludes_zero": true,
+            "practical_threshold": 0.05,
+            "n_eff": 2000,
+            "verdict": "material"
+          },
+          "tpr": {
+            "diff": -0.058994,
+            "ci": [
+              -0.139643,
+              0.023035
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.1,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "fpr": {
+            "diff": 0.020205,
+            "ci": [
+              0.000137,
+              0.039203
+            ],
+            "ci_excludes_zero": true,
+            "practical_threshold": 0.1,
+            "n_eff": 2000,
+            "verdict": "flag"
+          },
+          "ece": {
+            "diff": -0.00263,
+            "ci": [
+              -0.013982,
+              0.011044
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.03,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "four_fifths_tpr": 0.8371,
+          "four_fifths_fpr": 1.2384,
+          "four_fifths_selection_rate": 1.1435
+        },
+        "80+__vs__60-80": {
+          "auroc": {
+            "diff": -0.055823,
+            "ci": [
+              -0.087229,
+              -0.024477
+            ],
+            "ci_excludes_zero": true,
+            "practical_threshold": 0.05,
+            "n_eff": 2000,
+            "verdict": "material"
+          },
+          "tpr": {
+            "diff": -0.05057,
+            "ci": [
+              -0.11608,
+              0.01173
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.1,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "fpr": {
+            "diff": 0.011659,
+            "ci": [
+              -0.005147,
+              0.027973
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.1,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "ece": {
+            "diff": -0.008301,
+            "ci": [
+              -0.017018,
+              0.005292
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.03,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "four_fifths_tpr": 0.857,
+          "four_fifths_fpr": 1.125,
+          "four_fifths_selection_rate": 1.0415
+        },
+        "80+__vs__<40": {
+          "auroc": {
+            "diff": -0.132365,
+            "ci": [
+              -0.172742,
+              -0.079256
+            ],
+            "ci_excludes_zero": true,
+            "practical_threshold": 0.05,
+            "n_eff": 2000,
+            "verdict": "material"
+          },
+          "tpr": {
+            "diff": -0.276152,
+            "ci": [
+              -0.390544,
+              -0.112423
+            ],
+            "ci_excludes_zero": true,
+            "practical_threshold": 0.1,
+            "n_eff": 2000,
+            "verdict": "material"
+          },
+          "fpr": {
+            "diff": -0.034792,
+            "ci": [
+              -0.077086,
+              0.005774
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.1,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "ece": {
+            "diff": -0.009352,
+            "ci": [
+              -0.035054,
+              0.004561
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.03,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "four_fifths_tpr": 0.5233,
+          "four_fifths_fpr": 0.751,
+          "four_fifths_selection_rate": 0.632
+        },
+        "40-60__vs__60-80": {
+          "auroc": {
+            "diff": 0.029715,
+            "ci": [
+              -0.001214,
+              0.058361
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.05,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "tpr": {
+            "diff": 0.008424,
+            "ci": [
+              -0.067703,
+              0.08381
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.1,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "fpr": {
+            "diff": -0.008546,
+            "ci": [
+              -0.023283,
+              0.007409
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.1,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "ece": {
+            "diff": -0.005671,
+            "ci": [
+              -0.014867,
+              0.005631
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.03,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "four_fifths_tpr": 1.0238,
+          "four_fifths_fpr": 0.9084,
+          "four_fifths_selection_rate": 0.9108
+        },
+        "40-60__vs__<40": {
+          "auroc": {
+            "diff": -0.046827,
+            "ci": [
+              -0.086826,
+              0.003157
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.05,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "tpr": {
+            "diff": -0.217158,
+            "ci": [
+              -0.341256,
+              -0.054647
+            ],
+            "ci_excludes_zero": true,
+            "practical_threshold": 0.1,
+            "n_eff": 2000,
+            "verdict": "material"
+          },
+          "fpr": {
+            "diff": -0.054997,
+            "ci": [
+              -0.095431,
+              -0.015584
+            ],
+            "ci_excludes_zero": true,
+            "practical_threshold": 0.1,
+            "n_eff": 2000,
+            "verdict": "flag"
+          },
+          "ece": {
+            "diff": -0.006722,
+            "ci": [
+              -0.033167,
+              0.005231
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.03,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "four_fifths_tpr": 0.6251,
+          "four_fifths_fpr": 0.6065,
+          "four_fifths_selection_rate": 0.5527
+        },
+        "60-80__vs__<40": {
+          "auroc": {
+            "diff": -0.076541,
+            "ci": [
+              -0.11273,
+              -0.02702
+            ],
+            "ci_excludes_zero": true,
+            "practical_threshold": 0.05,
+            "n_eff": 2000,
+            "verdict": "material"
+          },
+          "tpr": {
+            "diff": -0.225582,
+            "ci": [
+              -0.338084,
+              -0.070502
+            ],
+            "ci_excludes_zero": true,
+            "practical_threshold": 0.1,
+            "n_eff": 2000,
+            "verdict": "material"
+          },
+          "fpr": {
+            "diff": -0.04645,
+            "ci": [
+              -0.08823,
+              -0.008328
+            ],
+            "ci_excludes_zero": true,
+            "practical_threshold": 0.1,
+            "n_eff": 2000,
+            "verdict": "flag"
+          },
+          "ece": {
+            "diff": -0.001051,
+            "ci": [
+              -0.028037,
+              0.009559
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.03,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "four_fifths_tpr": 0.6106,
+          "four_fifths_fpr": 0.6676,
+          "four_fifths_selection_rate": 0.6068
+        }
+      },
+      "verdict": {
+        "per_metric": {
+          "auroc": "MATERIAL DISPARITY",
+          "tpr": "MATERIAL DISPARITY",
+          "fpr": "FLAG (monitor)",
+          "ece": "PASS"
+        },
+        "overall": "MATERIAL DISPARITY"
+      }
+    },
+    "payer_code": {
+      "tier": "exploratory",
+      "pairs": {
+        "Missing__vs__Medicare": {
+          "auroc": {
+            "diff": 0.017357,
+            "ci": [
+              -0.012425,
+              0.046059
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.05,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "tpr": {
+            "diff": 0.017315,
+            "ci": [
+              -0.046796,
+              0.080813
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.1,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "fpr": {
+            "diff": 0.008428,
+            "ci": [
+              -0.007427,
+              0.023842
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.1,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "ece": {
+            "diff": 0.000408,
+            "ci": [
+              -0.011206,
+              0.009412
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.03,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "four_fifths_tpr": 1.0474,
+          "four_fifths_fpr": 1.0827,
+          "four_fifths_selection_rate": 1.0562
+        },
+        "Missing__vs__Self-pay": {
+          "auroc": {
+            "diff": -0.064013,
+            "ci": [
+              -0.109181,
+              -0.004954
+            ],
+            "ci_excludes_zero": true,
+            "practical_threshold": 0.05,
+            "n_eff": 2000,
+            "verdict": "material"
+          },
+          "tpr": {
+            "diff": -0.027367,
+            "ci": [
+              -0.178393,
+              0.151861
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.1,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "fpr": {
+            "diff": 0.04374,
+            "ci": [
+              0.017224,
+              0.06636
+            ],
+            "ci_excludes_zero": true,
+            "practical_threshold": 0.1,
+            "n_eff": 2000,
+            "verdict": "flag"
+          },
+          "ece": {
+            "diff": -0.018114,
+            "ci": [
+              -0.04335,
+              -0.000811
+            ],
+            "ci_excludes_zero": true,
+            "practical_threshold": 0.03,
+            "n_eff": 2000,
+            "verdict": "flag"
+          },
+          "four_fifths_tpr": 0.9333,
+          "four_fifths_fpr": 1.6571,
+          "four_fifths_selection_rate": 1.3572
+        },
+        "Missing__vs__Other": {
+          "auroc": {
+            "diff": -0.043191,
+            "ci": [
+              -0.104239,
+              0.030926
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.05,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "tpr": {
+            "diff": 0.069164,
+            "ci": [
+              -0.097775,
+              0.251495
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.1,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "fpr": {
+            "diff": 0.052761,
+            "ci": [
+              0.024179,
+              0.076758
+            ],
+            "ci_excludes_zero": true,
+            "practical_threshold": 0.1,
+            "n_eff": 2000,
+            "verdict": "flag"
+          },
+          "ece": {
+            "diff": -0.014972,
+            "ci": [
+              -0.036451,
+              0.005015
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.03,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "four_fifths_tpr": 1.2205,
+          "four_fifths_fpr": 1.917,
+          "four_fifths_selection_rate": 1.7471
+        },
+        "Missing__vs__Private": {
+          "auroc": {
+            "diff": -0.015325,
+            "ci": [
+              -0.04777,
+              0.016881
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.05,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "tpr": {
+            "diff": 0.069509,
+            "ci": [
+              -0.020813,
+              0.157214
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.1,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "fpr": {
+            "diff": 0.041589,
+            "ci": [
+              0.021005,
+              0.058903
+            ],
+            "ci_excludes_zero": true,
+            "practical_threshold": 0.1,
+            "n_eff": 2000,
+            "verdict": "flag"
+          },
+          "ece": {
+            "diff": 0.002066,
+            "ci": [
+              -0.010702,
+              0.012213
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.03,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "four_fifths_tpr": 1.2218,
+          "four_fifths_fpr": 1.6053,
+          "four_fifths_selection_rate": 1.5042
+        },
+        "Missing__vs__Medicaid": {
+          "auroc": {
+            "diff": 0.001068,
+            "ci": [
+              -0.060352,
+              0.073931
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.05,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "tpr": {
+            "diff": -0.026202,
+            "ci": [
+              -0.159804,
+              0.12792
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.1,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "fpr": {
+            "diff": 0.001916,
+            "ci": [
+              -0.041962,
+              0.041116
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.1,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "ece": {
+            "diff": 0.002714,
+            "ci": [
+              -0.034813,
+              0.00638
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.03,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "four_fifths_tpr": 0.936,
+          "four_fifths_fpr": 1.0177,
+          "four_fifths_selection_rate": 0.9828
+        },
+        "Medicare__vs__Self-pay": {
+          "auroc": {
+            "diff": -0.081369,
+            "ci": [
+              -0.125861,
+              -0.026167
+            ],
+            "ci_excludes_zero": true,
+            "practical_threshold": 0.05,
+            "n_eff": 2000,
+            "verdict": "material"
+          },
+          "tpr": {
+            "diff": -0.044683,
+            "ci": [
+              -0.181434,
+              0.121247
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.1,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "fpr": {
+            "diff": 0.035312,
+            "ci": [
+              0.009489,
+              0.058874
+            ],
+            "ci_excludes_zero": true,
+            "practical_threshold": 0.1,
+            "n_eff": 2000,
+            "verdict": "flag"
+          },
+          "ece": {
+            "diff": -0.018522,
+            "ci": [
+              -0.041855,
+              -4e-06
+            ],
+            "ci_excludes_zero": true,
+            "practical_threshold": 0.03,
+            "n_eff": 2000,
+            "verdict": "flag"
+          },
+          "four_fifths_tpr": 0.8911,
+          "four_fifths_fpr": 1.5305,
+          "four_fifths_selection_rate": 1.285
+        },
+        "Medicare__vs__Other": {
+          "auroc": {
+            "diff": -0.060548,
+            "ci": [
+              -0.120957,
+              0.01501
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.05,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "tpr": {
+            "diff": 0.051848,
+            "ci": [
+              -0.1092,
+              0.236185
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.1,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "fpr": {
+            "diff": 0.044333,
+            "ci": [
+              0.017907,
+              0.068492
+            ],
+            "ci_excludes_zero": true,
+            "practical_threshold": 0.1,
+            "n_eff": 2000,
+            "verdict": "flag"
+          },
+          "ece": {
+            "diff": -0.01538,
+            "ci": [
+              -0.035762,
+              0.006022
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.03,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "four_fifths_tpr": 1.1653,
+          "four_fifths_fpr": 1.7705,
+          "four_fifths_selection_rate": 1.6542
+        },
+        "Medicare__vs__Private": {
+          "auroc": {
+            "diff": -0.032682,
+            "ci": [
+              -0.067,
+              0.001598
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.05,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "tpr": {
+            "diff": 0.052193,
+            "ci": [
+              -0.038355,
+              0.14242
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.1,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "fpr": {
+            "diff": 0.033161,
+            "ci": [
+              0.012661,
+              0.052851
+            ],
+            "ci_excludes_zero": true,
+            "practical_threshold": 0.1,
+            "n_eff": 2000,
+            "verdict": "flag"
+          },
+          "ece": {
+            "diff": 0.001658,
+            "ci": [
+              -0.010447,
+              0.012921
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.03,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "four_fifths_tpr": 1.1666,
+          "four_fifths_fpr": 1.4826,
+          "four_fifths_selection_rate": 1.4242
+        },
+        "Medicare__vs__Medicaid": {
+          "auroc": {
+            "diff": -0.016289,
+            "ci": [
+              -0.076057,
+              0.059042
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.05,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "tpr": {
+            "diff": -0.043517,
+            "ci": [
+              -0.185783,
+              0.114314
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.1,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "fpr": {
+            "diff": -0.006511,
+            "ci": [
+              -0.052201,
+              0.03233
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.1,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "ece": {
+            "diff": 0.002306,
+            "ci": [
+              -0.035754,
+              0.007445
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.03,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "four_fifths_tpr": 0.8936,
+          "four_fifths_fpr": 0.9399,
+          "four_fifths_selection_rate": 0.9305
+        },
+        "Self-pay__vs__Other": {
+          "auroc": {
+            "diff": 0.020822,
+            "ci": [
+              -0.055676,
+              0.09704
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.05,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "tpr": {
+            "diff": 0.096531,
+            "ci": [
+              -0.108763,
+              0.29814
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.1,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "fpr": {
+            "diff": 0.009021,
+            "ci": [
+              -0.020505,
+              0.040361
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.1,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "ece": {
+            "diff": 0.003142,
+            "ci": [
+              -0.021846,
+              0.034262
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.03,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "four_fifths_tpr": 1.3077,
+          "four_fifths_fpr": 1.1568,
+          "four_fifths_selection_rate": 1.2873
+        },
+        "Self-pay__vs__Private": {
+          "auroc": {
+            "diff": 0.048687,
+            "ci": [
+              -0.012061,
+              0.098449
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.05,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "tpr": {
+            "diff": 0.096876,
+            "ci": [
+              -0.085671,
+              0.252556
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.1,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "fpr": {
+            "diff": -0.002151,
+            "ci": [
+              -0.028022,
+              0.024684
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.1,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "ece": {
+            "diff": 0.02018,
+            "ci": [
+              0.000615,
+              0.04474
+            ],
+            "ci_excludes_zero": true,
+            "practical_threshold": 0.03,
+            "n_eff": 2000,
+            "verdict": "flag"
+          },
+          "four_fifths_tpr": 1.3091,
+          "four_fifths_fpr": 0.9687,
+          "four_fifths_selection_rate": 1.1083
+        },
+        "Self-pay__vs__Medicaid": {
+          "auroc": {
+            "diff": 0.065081,
+            "ci": [
+              -0.011058,
+              0.145434
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.05,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "tpr": {
+            "diff": 0.001166,
+            "ci": [
+              -0.22301,
+              0.20888
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.1,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "fpr": {
+            "diff": -0.041823,
+            "ci": [
+              -0.091948,
+              0.00182
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.1,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "ece": {
+            "diff": 0.020829,
+            "ci": [
+              -0.020664,
+              0.034503
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.03,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "four_fifths_tpr": 1.0028,
+          "four_fifths_fpr": 0.6141,
+          "four_fifths_selection_rate": 0.7241
+        },
+        "Other__vs__Private": {
+          "auroc": {
+            "diff": 0.027866,
+            "ci": [
+              -0.045129,
+              0.090055
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.05,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "tpr": {
+            "diff": 0.000345,
+            "ci": [
+              -0.178391,
+              0.166685
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.1,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "fpr": {
+            "diff": -0.011172,
+            "ci": [
+              -0.03783,
+              0.017379
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.1,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "ece": {
+            "diff": 0.017037,
+            "ci": [
+              -0.005808,
+              0.037168
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.03,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "four_fifths_tpr": 1.0011,
+          "four_fifths_fpr": 0.8374,
+          "four_fifths_selection_rate": 0.861
+        },
+        "Other__vs__Medicaid": {
+          "auroc": {
+            "diff": 0.044259,
+            "ci": [
+              -0.042929,
+              0.132569
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.05,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "tpr": {
+            "diff": -0.095365,
+            "ci": [
+              -0.310457,
+              0.120026
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.1,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "fpr": {
+            "diff": -0.050845,
+            "ci": [
+              -0.100404,
+              -0.008547
+            ],
+            "ci_excludes_zero": true,
+            "practical_threshold": 0.1,
+            "n_eff": 2000,
+            "verdict": "flag"
+          },
+          "ece": {
+            "diff": 0.017686,
+            "ci": [
+              -0.027037,
+              0.028454
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.03,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "four_fifths_tpr": 0.7669,
+          "four_fifths_fpr": 0.5309,
+          "four_fifths_selection_rate": 0.5625
+        },
+        "Private__vs__Medicaid": {
+          "auroc": {
+            "diff": 0.016393,
+            "ci": [
+              -0.048713,
+              0.089935
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.05,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "tpr": {
+            "diff": -0.095711,
+            "ci": [
+              -0.247936,
+              0.085646
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.1,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "fpr": {
+            "diff": -0.039673,
+            "ci": [
+              -0.086335,
+              0.000697
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.1,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "ece": {
+            "diff": 0.000649,
+            "ci": [
+              -0.03719,
+              0.007248
+            ],
+            "ci_excludes_zero": false,
+            "practical_threshold": 0.03,
+            "n_eff": 2000,
+            "verdict": "pass"
+          },
+          "four_fifths_tpr": 0.766,
+          "four_fifths_fpr": 0.634,
+          "four_fifths_selection_rate": 0.6533
+        }
+      },
+      "verdict": {
+        "per_metric": {
+          "auroc": "MATERIAL DISPARITY",
+          "tpr": "PASS",
+          "fpr": "FLAG (monitor)",
+          "ece": "FLAG (monitor)"
+        },
+        "overall": "MATERIAL DISPARITY"
+      }
+    }
+  },
+  "project_verdict": "MATERIAL DISPARITY",
+  "project_verdict_note": "Project verdict is the worst of the PRIMARY attributes (race/gender/age). payer_code is exploratory and cannot alone produce a project MATERIAL verdict.",
+  "s_eval_patient_sha256": "71a7a8b69e3bbfd3ddd41b0dd833490948037b34cff78b562a19e0ce5a68e148",
+  "seed": 42,
+  "n_boot": 2000,
+  "git_commit": "3ad7e37c44838a831ed4c0508ae6891fa7c904f0"
+}

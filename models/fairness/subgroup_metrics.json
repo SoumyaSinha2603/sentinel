@@ -1,0 +1,995 @@
+{
+  "provenance": {
+    "s_eval_patient_sha256": "71a7a8b69e3bbfd3ddd41b0dd833490948037b34cff78b562a19e0ce5a68e148",
+    "seed": 42,
+    "n_boot": 2000,
+    "sklearn_version": "1.7.2",
+    "lightgbm_version": "4.6.0",
+    "git_commit": "3ad7e37c44838a831ed4c0508ae6891fa7c904f0",
+    "primary_budget": 0.1,
+    "primary_threshold": 0.1875,
+    "operating_point_thresholds": {
+      "0.05": 0.2471213463241807,
+      "0.1": 0.1875,
+      "0.2": 0.16036036036036036
+    },
+    "practical_thresholds": {
+      "auroc": 0.05,
+      "tpr": 0.1,
+      "fpr": 0.1,
+      "ece": 0.03
+    },
+    "subgroup_ece_flag": 0.05,
+    "sensitive_attribute_use_note": "Sensitive attributes (race/gender/age/payer_code) were used ONLY as slicing labels for subgroup metrics, read from the raw cohort columns. They are never added to any feature frame and the deployed model does not consume them as decision inputs.",
+    "in_sample_optimism_note": "In-sample optimism \u2014 read absolute levels with care. `@phase1` was refit on the full 80% train, which CONTAINS `S_eval` (S_eval is a 20% patient-grouped slice carved from inside that 80% for Phase 2). Scoring S_eval with @phase1 is therefore IN-SAMPLE, so the absolute subgroup AUROCs here (~0.70-0.84) are optimistic versus the honest locked holdout AUROC 0.677 and the ~0.62-0.68 ceiling \u2014 they are NOT a discrimination win. This audit's deliverable is the RELATIVE parity between subgroups, where the optimism is largely common-mode; absolute discrimination is not comparable to the holdout figure. This is a known, documented property of the frozen S_eval surface (Phase-2 calibration used out-of-fold S_fit scores precisely to avoid this optimism), not audit leakage.",
+    "n": 15734,
+    "n_pos": 1802,
+    "prevalence": 0.11452904537943308
+  },
+  "attributes": {
+    "race": {
+      "tier": "primary",
+      "n_dropped_unknown": 0,
+      "powered_labels": [
+        "Caucasian",
+        "AfricanAmerican"
+      ],
+      "subgroups": {
+        "Caucasian": {
+          "n": 11709,
+          "positives": 1348,
+          "prevalence": 0.115125,
+          "powered": true,
+          "threshold": 0.1875,
+          "auroc": 0.767859,
+          "auroc_ci": [
+            0.753553,
+            0.781322
+          ],
+          "auprc": 0.304231,
+          "auprc_ci": [
+            0.272123,
+            0.339204
+          ],
+          "ece": 0.028346,
+          "ece_ci": [
+            0.024658,
+            0.034612
+          ],
+          "brier": 0.09196,
+          "brier_ci": null,
+          "tpr": 0.357567,
+          "tpr_ci": [
+            0.324033,
+            0.392274
+          ],
+          "fpr": 0.092076,
+          "fpr_ci": [
+            0.084537,
+            0.099176
+          ],
+          "selection_rate": 0.122641,
+          "selection_rate_ci": [
+            0.113171,
+            0.132555
+          ],
+          "sensitivity_points": {
+            "5pct": {
+              "tpr": 0.212166,
+              "fpr": 0.03822,
+              "selection_rate": 0.058246
+            },
+            "20pct": {
+              "tpr": 0.494065,
+              "fpr": 0.164077,
+              "selection_rate": 0.202067
+            }
+          }
+        },
+        "AfricanAmerican": {
+          "n": 3066,
+          "positives": 370,
+          "prevalence": 0.120678,
+          "powered": true,
+          "threshold": 0.1875,
+          "auroc": 0.742882,
+          "auroc_ci": [
+            0.711767,
+            0.77097
+          ],
+          "auprc": 0.297311,
+          "auprc_ci": [
+            0.23703,
+            0.361762
+          ],
+          "ece": 0.020111,
+          "ece_ci": [
+            0.015318,
+            0.033346
+          ],
+          "brier": 0.096636,
+          "brier_ci": null,
+          "tpr": 0.408108,
+          "tpr_ci": [
+            0.338307,
+            0.475196
+          ],
+          "fpr": 0.121662,
+          "fpr_ci": [
+            0.103501,
+            0.141059
+          ],
+          "selection_rate": 0.15623,
+          "selection_rate_ci": [
+            0.132965,
+            0.180651
+          ],
+          "sensitivity_points": {
+            "5pct": {
+              "tpr": 0.235135,
+              "fpr": 0.054525,
+              "selection_rate": 0.076321
+            },
+            "20pct": {
+              "tpr": 0.543243,
+              "fpr": 0.203264,
+              "selection_rate": 0.244292
+            }
+          }
+        },
+        "Missing": {
+          "n": 312,
+          "positives": 22,
+          "prevalence": 0.070513,
+          "powered": false,
+          "threshold": 0.1875,
+          "auroc": 0.763715,
+          "auroc_ci": [
+            0.65184,
+            0.85891
+          ],
+          "auprc": 0.246081,
+          "auprc_ci": [
+            0.110805,
+            0.418714
+          ],
+          "ece": 0.044362,
+          "ece_ci": [
+            0.0302,
+            0.074512
+          ],
+          "brier": 0.061205,
+          "brier_ci": null,
+          "tpr": 0.136364,
+          "tpr_ci": [
+            0.0,
+            0.272727
+          ],
+          "fpr": 0.02069,
+          "fpr_ci": [
+            0.006688,
+            0.038869
+          ],
+          "selection_rate": 0.028846,
+          "selection_rate_ci": [
+            0.011833,
+            0.047924
+          ],
+          "sensitivity_points": {
+            "5pct": {
+              "tpr": 0.045455,
+              "fpr": 0.006897,
+              "selection_rate": 0.009615
+            },
+            "20pct": {
+              "tpr": 0.363636,
+              "fpr": 0.062069,
+              "selection_rate": 0.083333
+            }
+          }
+        },
+        "Other": {
+          "n": 244,
+          "positives": 29,
+          "prevalence": 0.118852,
+          "powered": false,
+          "threshold": 0.1875,
+          "auroc": 0.747073,
+          "auroc_ci": [
+            0.650483,
+            0.834703
+          ],
+          "auprc": 0.277603,
+          "auprc_ci": [
+            0.171724,
+            0.394418
+          ],
+          "ece": 0.047622,
+          "ece_ci": [
+            0.039977,
+            0.099466
+          ],
+          "brier": 0.096606,
+          "brier_ci": null,
+          "tpr": 0.37931,
+          "tpr_ci": [
+            0.157895,
+            0.605263
+          ],
+          "fpr": 0.102326,
+          "fpr_ci": [
+            0.047377,
+            0.166684
+          ],
+          "selection_rate": 0.135246,
+          "selection_rate_ci": [
+            0.068369,
+            0.214293
+          ],
+          "sensitivity_points": {
+            "5pct": {
+              "tpr": 0.241379,
+              "fpr": 0.065116,
+              "selection_rate": 0.086066
+            },
+            "20pct": {
+              "tpr": 0.413793,
+              "fpr": 0.162791,
+              "selection_rate": 0.192623
+            }
+          }
+        },
+        "Asian": {
+          "n": 87,
+          "positives": 6,
+          "prevalence": 0.068966,
+          "powered": false,
+          "threshold": 0.1875,
+          "auroc": 0.851852,
+          "auroc_ci": [
+            0.583578,
+            0.978712
+          ],
+          "auprc": 0.508446,
+          "auprc_ci": [
+            0.047634,
+            0.833333
+          ],
+          "ece": 0.033262,
+          "ece_ci": [
+            0.040306,
+            0.095947
+          ],
+          "brier": 0.053648,
+          "brier_ci": null,
+          "tpr": 0.5,
+          "tpr_ci": [
+            0.0,
+            1.0
+          ],
+          "fpr": 0.061728,
+          "fpr_ci": [
+            0.0,
+            0.14944
+          ],
+          "selection_rate": 0.091954,
+          "selection_rate_ci": [
+            0.0,
+            0.221053
+          ],
+          "sensitivity_points": {
+            "5pct": {
+              "tpr": 0.5,
+              "fpr": 0.037037,
+              "selection_rate": 0.068966
+            },
+            "20pct": {
+              "tpr": 0.5,
+              "fpr": 0.08642,
+              "selection_rate": 0.114943
+            }
+          }
+        },
+        "Hispanic": {
+          "n": 316,
+          "positives": 27,
+          "prevalence": 0.085443,
+          "powered": false,
+          "threshold": 0.1875,
+          "auroc": 0.737281,
+          "auroc_ci": [
+            0.630462,
+            0.827336
+          ],
+          "auprc": 0.249935,
+          "auprc_ci": [
+            0.13854,
+            0.433639
+          ],
+          "ece": 0.040804,
+          "ece_ci": [
+            0.030921,
+            0.073818
+          ],
+          "brier": 0.072364,
+          "brier_ci": null,
+          "tpr": 0.37037,
+          "tpr_ci": [
+            0.166667,
+            0.5625
+          ],
+          "fpr": 0.096886,
+          "fpr_ci": [
+            0.062087,
+            0.134489
+          ],
+          "selection_rate": 0.120253,
+          "selection_rate_ci": [
+            0.076905,
+            0.166678
+          ],
+          "sensitivity_points": {
+            "5pct": {
+              "tpr": 0.222222,
+              "fpr": 0.017301,
+              "selection_rate": 0.03481
+            },
+            "20pct": {
+              "tpr": 0.407407,
+              "fpr": 0.16609,
+              "selection_rate": 0.186709
+            }
+          }
+        }
+      }
+    },
+    "gender": {
+      "tier": "primary",
+      "n_dropped_unknown": 1,
+      "powered_labels": [
+        "Male",
+        "Female"
+      ],
+      "subgroups": {
+        "Male": {
+          "n": 7291,
+          "positives": 825,
+          "prevalence": 0.113153,
+          "powered": true,
+          "threshold": 0.1875,
+          "auroc": 0.749767,
+          "auroc_ci": [
+            0.730654,
+            0.768212
+          ],
+          "auprc": 0.27447,
+          "auprc_ci": [
+            0.246656,
+            0.304891
+          ],
+          "ece": 0.022044,
+          "ece_ci": [
+            0.01813,
+            0.030174
+          ],
+          "brier": 0.092049,
+          "brier_ci": null,
+          "tpr": 0.339394,
+          "tpr_ci": [
+            0.297392,
+            0.382766
+          ],
+          "fpr": 0.097278,
+          "fpr_ci": [
+            0.087009,
+            0.106919
+          ],
+          "selection_rate": 0.124674,
+          "selection_rate_ci": [
+            0.112051,
+            0.137581
+          ],
+          "sensitivity_points": {
+            "5pct": {
+              "tpr": 0.189091,
+              "fpr": 0.038509,
+              "selection_rate": 0.055548
+            },
+            "20pct": {
+              "tpr": 0.483636,
+              "fpr": 0.165481,
+              "selection_rate": 0.201481
+            }
+          }
+        },
+        "Female": {
+          "n": 8442,
+          "positives": 977,
+          "prevalence": 0.115731,
+          "powered": true,
+          "threshold": 0.1875,
+          "auroc": 0.773691,
+          "auroc_ci": [
+            0.756762,
+            0.790389
+          ],
+          "auprc": 0.319622,
+          "auprc_ci": [
+            0.275848,
+            0.370022
+          ],
+          "ece": 0.030163,
+          "ece_ci": [
+            0.025143,
+            0.037392
+          ],
+          "brier": 0.091462,
+          "brier_ci": null,
+          "tpr": 0.388946,
+          "tpr_ci": [
+            0.346801,
+            0.433397
+          ],
+          "fpr": 0.095646,
+          "fpr_ci": [
+            0.086487,
+            0.105527
+          ],
+          "selection_rate": 0.12959,
+          "selection_rate_ci": [
+            0.117176,
+            0.143398
+          ],
+          "sensitivity_points": {
+            "5pct": {
+              "tpr": 0.239509,
+              "fpr": 0.042599,
+              "selection_rate": 0.065387
+            },
+            "20pct": {
+              "tpr": 0.513818,
+              "fpr": 0.172271,
+              "selection_rate": 0.211798
+            }
+          }
+        }
+      }
+    },
+    "age": {
+      "tier": "primary",
+      "n_dropped_unknown": 0,
+      "powered_labels": [
+        "80+",
+        "40-60",
+        "60-80",
+        "<40"
+      ],
+      "subgroups": {
+        "80+": {
+          "n": 2954,
+          "positives": 353,
+          "prevalence": 0.119499,
+          "powered": true,
+          "threshold": 0.1875,
+          "auroc": 0.702698,
+          "auroc_ci": [
+            0.675659,
+            0.729193
+          ],
+          "auprc": 0.238464,
+          "auprc_ci": [
+            0.207215,
+            0.27859
+          ],
+          "ece": 0.023871,
+          "ece_ci": [
+            0.017796,
+            0.036269
+          ],
+          "brier": 0.099389,
+          "brier_ci": null,
+          "tpr": 0.303116,
+          "tpr_ci": [
+            0.253242,
+            0.353563
+          ],
+          "fpr": 0.10496,
+          "fpr_ci": [
+            0.090838,
+            0.119342
+          ],
+          "selection_rate": 0.128639,
+          "selection_rate_ci": [
+            0.112841,
+            0.143722
+          ],
+          "sensitivity_points": {
+            "5pct": {
+              "tpr": 0.144476,
+              "fpr": 0.039216,
+              "selection_rate": 0.051794
+            },
+            "20pct": {
+              "tpr": 0.473088,
+              "fpr": 0.203768,
+              "selection_rate": 0.235951
+            }
+          }
+        },
+        "40-60": {
+          "n": 4169,
+          "positives": 417,
+          "prevalence": 0.100024,
+          "powered": true,
+          "threshold": 0.1875,
+          "auroc": 0.788236,
+          "auroc_ci": [
+            0.762511,
+            0.811521
+          ],
+          "auprc": 0.301325,
+          "auprc_ci": [
+            0.238107,
+            0.364611
+          ],
+          "ece": 0.026501,
+          "ece_ci": [
+            0.020589,
+            0.036082
+          ],
+          "brier": 0.080335,
+          "brier_ci": null,
+          "tpr": 0.36211,
+          "tpr_ci": [
+            0.296723,
+            0.42143
+          ],
+          "fpr": 0.084755,
+          "fpr_ci": [
+            0.072064,
+            0.098014
+          ],
+          "selection_rate": 0.112497,
+          "selection_rate_ci": [
+            0.095833,
+            0.13012
+          ],
+          "sensitivity_points": {
+            "5pct": {
+              "tpr": 0.218225,
+              "fpr": 0.038913,
+              "selection_rate": 0.056848
+            },
+            "20pct": {
+              "tpr": 0.460432,
+              "fpr": 0.141791,
+              "selection_rate": 0.173663
+            }
+          }
+        },
+        "60-80": {
+          "n": 7481,
+          "positives": 868,
+          "prevalence": 0.116027,
+          "powered": true,
+          "threshold": 0.1875,
+          "auroc": 0.758521,
+          "auroc_ci": [
+            0.741072,
+            0.775552
+          ],
+          "auprc": 0.293532,
+          "auprc_ci": [
+            0.266552,
+            0.322122
+          ],
+          "ece": 0.032172,
+          "ece_ci": [
+            0.026546,
+            0.039373
+          ],
+          "brier": 0.093523,
+          "brier_ci": null,
+          "tpr": 0.353687,
+          "tpr_ci": [
+            0.314244,
+            0.391031
+          ],
+          "fpr": 0.093301,
+          "fpr_ci": [
+            0.08397,
+            0.102467
+          ],
+          "selection_rate": 0.123513,
+          "selection_rate_ci": [
+            0.112422,
+            0.134773
+          ],
+          "sensitivity_points": {
+            "5pct": {
+              "tpr": 0.197005,
+              "fpr": 0.035687,
+              "selection_rate": 0.054404
+            },
+            "20pct": {
+              "tpr": 0.501152,
+              "fpr": 0.170119,
+              "selection_rate": 0.208528
+            }
+          }
+        },
+        "<40": {
+          "n": 1130,
+          "positives": 164,
+          "prevalence": 0.145133,
+          "powered": true,
+          "threshold": 0.1875,
+          "auroc": 0.835063,
+          "auroc_ci": [
+            0.789113,
+            0.866243
+          ],
+          "auprc": 0.448153,
+          "auprc_ci": [
+            0.304888,
+            0.567262
+          ],
+          "ece": 0.033223,
+          "ece_ci": [
+            0.024838,
+            0.059672
+          ],
+          "brier": 0.101854,
+          "brier_ci": null,
+          "tpr": 0.579268,
+          "tpr_ci": [
+            0.42734,
+            0.681322
+          ],
+          "fpr": 0.139752,
+          "fpr_ci": [
+            0.10189,
+            0.180352
+          ],
+          "selection_rate": 0.20354,
+          "selection_rate_ci": [
+            0.143952,
+            0.262432
+          ],
+          "sensitivity_points": {
+            "5pct": {
+              "tpr": 0.469512,
+              "fpr": 0.085921,
+              "selection_rate": 0.141593
+            },
+            "20pct": {
+              "tpr": 0.652439,
+              "fpr": 0.174948,
+              "selection_rate": 0.244248
+            }
+          }
+        }
+      }
+    },
+    "payer_code": {
+      "tier": "exploratory",
+      "n_dropped_unknown": 0,
+      "powered_labels": [
+        "Missing",
+        "Medicare",
+        "Self-pay",
+        "Other",
+        "Private",
+        "Medicaid"
+      ],
+      "subgroups": {
+        "Missing": {
+          "n": 6198,
+          "positives": 713,
+          "prevalence": 0.115037,
+          "powered": true,
+          "threshold": 0.1875,
+          "auroc": 0.761742,
+          "auroc_ci": [
+            0.743281,
+            0.780206
+          ],
+          "auprc": 0.283094,
+          "auprc_ci": [
+            0.252434,
+            0.318218
+          ],
+          "ece": 0.028958,
+          "ece_ci": [
+            0.023222,
+            0.037165
+          ],
+          "brier": 0.092808,
+          "brier_ci": null,
+          "tpr": 0.382889,
+          "tpr_ci": [
+            0.342221,
+            0.423546
+          ],
+          "fpr": 0.110301,
+          "fpr_ci": [
+            0.099617,
+            0.120352
+          ],
+          "selection_rate": 0.141659,
+          "selection_rate_ci": [
+            0.128624,
+            0.153333
+          ],
+          "sensitivity_points": {
+            "5pct": {
+              "tpr": 0.204769,
+              "fpr": 0.044303,
+              "selection_rate": 0.062762
+            },
+            "20pct": {
+              "tpr": 0.525947,
+              "fpr": 0.19216,
+              "selection_rate": 0.230558
+            }
+          }
+        },
+        "Medicare": {
+          "n": 4988,
+          "positives": 610,
+          "prevalence": 0.122294,
+          "powered": true,
+          "threshold": 0.1875,
+          "auroc": 0.744385,
+          "auroc_ci": [
+            0.721567,
+            0.765992
+          ],
+          "auprc": 0.315077,
+          "auprc_ci": [
+            0.263396,
+            0.367827
+          ],
+          "ece": 0.02855,
+          "ece_ci": [
+            0.023784,
+            0.038252
+          ],
+          "brier": 0.097222,
+          "brier_ci": null,
+          "tpr": 0.365574,
+          "tpr_ci": [
+            0.317107,
+            0.415066
+          ],
+          "fpr": 0.101873,
+          "fpr_ci": [
+            0.090052,
+            0.114135
+          ],
+          "selection_rate": 0.134122,
+          "selection_rate_ci": [
+            0.119315,
+            0.149733
+          ],
+          "sensitivity_points": {
+            "5pct": {
+              "tpr": 0.218033,
+              "fpr": 0.040658,
+              "selection_rate": 0.06235
+            },
+            "20pct": {
+              "tpr": 0.5,
+              "fpr": 0.181361,
+              "selection_rate": 0.220329
+            }
+          }
+        },
+        "Self-pay": {
+          "n": 709,
+          "positives": 78,
+          "prevalence": 0.110014,
+          "powered": true,
+          "threshold": 0.1875,
+          "auroc": 0.825755,
+          "auroc_ci": [
+            0.770738,
+            0.866449
+          ],
+          "auprc": 0.402223,
+          "auprc_ci": [
+            0.259313,
+            0.510085
+          ],
+          "ece": 0.047072,
+          "ece_ci": [
+            0.03228,
+            0.072821
+          ],
+          "brier": 0.082443,
+          "brier_ci": null,
+          "tpr": 0.410256,
+          "tpr_ci": [
+            0.233333,
+            0.554571
+          ],
+          "fpr": 0.066561,
+          "fpr_ci": [
+            0.046128,
+            0.089433
+          ],
+          "selection_rate": 0.104372,
+          "selection_rate_ci": [
+            0.068802,
+            0.146374
+          ],
+          "sensitivity_points": {
+            "5pct": {
+              "tpr": 0.294872,
+              "fpr": 0.031696,
+              "selection_rate": 0.060649
+            },
+            "20pct": {
+              "tpr": 0.525641,
+              "fpr": 0.114105,
+              "selection_rate": 0.159379
+            }
+          }
+        },
+        "Other": {
+          "n": 555,
+          "positives": 51,
+          "prevalence": 0.091892,
+          "powered": true,
+          "threshold": 0.1875,
+          "auroc": 0.804933,
+          "auroc_ci": [
+            0.734911,
+            0.862561
+          ],
+          "auprc": 0.326196,
+          "auprc_ci": [
+            0.185148,
+            0.458021
+          ],
+          "ece": 0.04393,
+          "ece_ci": [
+            0.026429,
+            0.065108
+          ],
+          "brier": 0.073108,
+          "brier_ci": null,
+          "tpr": 0.313725,
+          "tpr_ci": [
+            0.135135,
+            0.473727
+          ],
+          "fpr": 0.05754,
+          "fpr_ci": [
+            0.03536,
+            0.082072
+          ],
+          "selection_rate": 0.081081,
+          "selection_rate_ci": [
+            0.048036,
+            0.117241
+          ],
+          "sensitivity_points": {
+            "5pct": {
+              "tpr": 0.215686,
+              "fpr": 0.031746,
+              "selection_rate": 0.048649
+            },
+            "20pct": {
+              "tpr": 0.431373,
+              "fpr": 0.105159,
+              "selection_rate": 0.135135
+            }
+          }
+        },
+        "Private": {
+          "n": 2729,
+          "positives": 284,
+          "prevalence": 0.104067,
+          "powered": true,
+          "threshold": 0.1875,
+          "auroc": 0.777067,
+          "auroc_ci": [
+            0.749722,
+            0.803454
+          ],
+          "auprc": 0.284048,
+          "auprc_ci": [
+            0.239954,
+            0.330752
+          ],
+          "ece": 0.026892,
+          "ece_ci": [
+            0.020199,
+            0.038459
+          ],
+          "brier": 0.084809,
+          "brier_ci": null,
+          "tpr": 0.31338,
+          "tpr_ci": [
+            0.235074,
+            0.390691
+          ],
+          "fpr": 0.068712,
+          "fpr_ci": [
+            0.053228,
+            0.086
+          ],
+          "selection_rate": 0.094174,
+          "selection_rate_ci": [
+            0.072092,
+            0.117227
+          ],
+          "sensitivity_points": {
+            "5pct": {
+              "tpr": 0.204225,
+              "fpr": 0.031084,
+              "selection_rate": 0.049102
+            },
+            "20pct": {
+              "tpr": 0.440141,
+              "fpr": 0.12229,
+              "selection_rate": 0.155368
+            }
+          }
+        },
+        "Medicaid": {
+          "n": 555,
+          "positives": 66,
+          "prevalence": 0.118919,
+          "powered": true,
+          "threshold": 0.1875,
+          "auroc": 0.760674,
+          "auroc_ci": [
+            0.68801,
+            0.818136
+          ],
+          "auprc": 0.291335,
+          "auprc_ci": [
+            0.190737,
+            0.380538
+          ],
+          "ece": 0.026244,
+          "ece_ci": [
+            0.025581,
+            0.064687
+          ],
+          "brier": 0.094802,
+          "brier_ci": null,
+          "tpr": 0.409091,
+          "tpr_ci": [
+            0.256733,
+            0.539479
+          ],
+          "fpr": 0.108384,
+          "fpr_ci": [
+            0.07064,
+            0.151142
+          ],
+          "selection_rate": 0.144144,
+          "selection_rate_ci": [
+            0.095732,
+            0.196702
+          ],
+          "sensitivity_points": {
+            "5pct": {
+              "tpr": 0.287879,
+              "fpr": 0.06953,
+              "selection_rate": 0.095495
+            },
+            "20pct": {
+              "tpr": 0.5,
+              "fpr": 0.171779,
+              "selection_rate": 0.210811
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,184 @@
+{
+  "verdict": "GAP SURVIVES (real)",
+  "rationale": "Out-of-fold, AUROC declines monotonically across the age gradient (<40 0.751 \u2192 40-60 0.698 \u2192 60-80 0.659 \u2192 80+ 0.623). The material signal is this CUMULATIVE age gradient, not an 80+ cliff: the adjacent 80+ vs 60-80 step is sub-threshold (\u0394=-0.036 CI [-0.055, -0.018] \u2014 statistically significant but |\u0394| \u2264 0.05), while the cumulative multi-band gaps clear the bar (80+ vs 40-60 \u0394=-0.075 CI [-0.097, -0.052], material; 80+ vs <40 \u0394=-0.128 CI [-0.159, -0.096], material). The age finding is REAL and best described as a gradient in rank-separability with age \u2014 not a discontinuity at 80+; the plausible mechanism is case mix (elderly risk distributions are compressed, so ranking is intrinsically harder). On calibration, 80+ OOF ECE is 0.006 \u2014 far below the 0.05 per-subgroup bar, so 80+ is merely less rank-separable, still well-calibrated. Caveat: this ECE is measured on calibrated OOF scores the committed isotonic map was itself fit on (so it is mildly optimistic FOR THE CALIBRATOR), but that small monotone-map optimism cannot lift 0.006 across the 0.05 bar \u2014 the 'well-calibrated, not miscalibrated' conclusion is robust to the caveat.",
+  "per_band": {
+    "<40": {
+      "n": 3849,
+      "positives": 392,
+      "prevalence": 0.101845,
+      "powered": true,
+      "auroc_oof": 0.750812,
+      "auroc_oof_ci": [
+        0.723816,
+        0.776616
+      ],
+      "auprc_oof": 0.266337,
+      "auprc_oof_ci": [
+        0.222348,
+        0.314124
+      ],
+      "ece_oof_cal": 0.011156,
+      "ece_oof_cal_ci": [
+        0.008846,
+        0.022923
+      ],
+      "auroc_s_eval": 0.835063,
+      "auroc_s_eval_ci": [
+        0.789113,
+        0.866243
+      ],
+      "optimism_gap": 0.084251
+    },
+    "40-60": {
+      "n": 17120,
+      "positives": 1716,
+      "prevalence": 0.100234,
+      "powered": true,
+      "auroc_oof": 0.697951,
+      "auroc_oof_ci": [
+        0.682069,
+        0.713254
+      ],
+      "auprc_oof": 0.237773,
+      "auprc_oof_ci": [
+        0.21322,
+        0.263666
+      ],
+      "ece_oof_cal": 0.004166,
+      "ece_oof_cal_ci": [
+        0.003742,
+        0.009939
+      ],
+      "auroc_s_eval": 0.788236,
+      "auroc_s_eval_ci": [
+        0.762511,
+        0.811521
+      ],
+      "optimism_gap": 0.090285
+    },
+    "60-80": {
+      "n": 30603,
+      "positives": 3628,
+      "prevalence": 0.11855,
+      "powered": true,
+      "auroc_oof": 0.65867,
+      "auroc_oof_ci": [
+        0.648745,
+        0.668843
+      ],
+      "auprc_oof": 0.21992,
+      "auprc_oof_ci": [
+        0.206385,
+        0.23554
+      ],
+      "ece_oof_cal": 0.001701,
+      "ece_oof_cal_ci": [
+        0.002656,
+        0.00715
+      ],
+      "auroc_s_eval": 0.758521,
+      "auroc_s_eval_ci": [
+        0.741072,
+        0.775552
+      ],
+      "optimism_gap": 0.099851
+    },
+    "80+": {
+      "n": 12235,
+      "positives": 1560,
+      "prevalence": 0.127503,
+      "powered": true,
+      "auroc_oof": 0.622598,
+      "auroc_oof_ci": [
+        0.606324,
+        0.637719
+      ],
+      "auprc_oof": 0.197374,
+      "auprc_oof_ci": [
+        0.181932,
+        0.214957
+      ],
+      "ece_oof_cal": 0.005534,
+      "ece_oof_cal_ci": [
+        0.00527,
+        0.014076
+      ],
+      "auroc_s_eval": 0.702698,
+      "auroc_s_eval_ci": [
+        0.675659,
+        0.729193
+      ],
+      "optimism_gap": 0.0801
+    }
+  },
+  "pairwise_oof": {
+    "80+__vs__60-80": {
+      "diff": -0.036072,
+      "ci": [
+        -0.055314,
+        -0.018207
+      ],
+      "ci_excludes_zero": true,
+      "practical_threshold": 0.05,
+      "material": false,
+      "primary": true
+    },
+    "80+__vs__40-60": {
+      "diff": -0.075354,
+      "ci": [
+        -0.096952,
+        -0.05235
+      ],
+      "ci_excludes_zero": true,
+      "practical_threshold": 0.05,
+      "material": true,
+      "primary": true
+    },
+    "80+__vs__<40": {
+      "diff": -0.128215,
+      "ci": [
+        -0.158778,
+        -0.095505
+      ],
+      "ci_excludes_zero": true,
+      "practical_threshold": 0.05,
+      "material": true,
+      "primary": false
+    }
+  },
+  "diagnostic_20_30": {
+    "bucket": "[20-30)",
+    "n": 930,
+    "positives": 101,
+    "prevalence": 0.108602,
+    "auroc_oof": 0.739135,
+    "auroc_oof_ci": [
+      0.681734,
+      0.791804
+    ]
+  },
+  "provenance": {
+    "surface": "S_fit (out-of-fold)",
+    "s_fit_patient_sha256": "e055e3b1bf67732f7e7c30895c6a52a3ff73ae1a3051d2d97c0a8eba0bd3de29",
+    "reproduced_oof_auroc": 0.671318,
+    "expected_oof_auroc": 0.6713,
+    "fold_auroc": [
+      0.6565,
+      0.6886,
+      0.6774,
+      0.6642,
+      0.6701
+    ],
+    "n": 63807,
+    "n_pos": 7296,
+    "all_bands_powered": true,
+    "seed": 42,
+    "n_boot": 2000,
+    "auroc_practical_threshold": 0.05,
+    "ece_practical_threshold": 0.03,
+    "sklearn_version": "1.7.2",
+    "lightgbm_version": "4.6.0",
+    "git_commit": "3ad7e37c44838a831ed4c0508ae6891fa7c904f0",
+    "calibrator_in_sample_caveat": "The committed isotonic map was FIT on these S_fit OOF scores in W5, so per-band ECE here is mildly optimistic FOR THE CALIBRATOR (a low-capacity monotone map \u2014 small effect). AUROC/AUPRC are calibration-invariant (isotonic is monotone), so they are unaffected. Discrimination is the primary deliverable of this check; ECE is secondary."
+  }
+}
