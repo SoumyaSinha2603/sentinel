@@ -210,7 +210,39 @@ docs/           competitive_landscape.md and design notes
   portable form, asserts sklearn version, applies AFTER the booster (and casts category
   dtypes — the existing serving prereq below).
 
-## NEXT: PHASE 2 — TRUST LAYER I (remaining: clinical utility)
+## Current state — PHASE 2, clinical-utility step (W6) DONE
 
-- Calibration done (above). Remaining Phase-2 work: decision-curve analysis (DCA) +
-  precision@k on the FROZEN S_eval surface (same patient-disjoint surface, still un-fit).
+- Read-only utility eval of the SHIPPED calibrated path on FROZEN S_eval. Code:
+  `src/sentinel/clinical_utility/` (`calibrated.py` = Phase-4 loader path, `dca.py`,
+  `ranking.py`, `evaluate.py` entrypoint `python -m sentinel.clinical_utility.evaluate`).
+  Report `reports/clinical_utility_results.md`; figures decision_curve / alert_burden_curve
+  / precision_recall_at_k. Trains/registers NOTHING; holdout never loaded.
+- `get_calibrated_proba` dogfoods the Phase-4 path: @phase1 booster + isotonic map
+  RECONSTRUCTED FROM THE COMMITTED MANIFEST portable knots (np.interp), NOT the joblib.
+  Matches committed joblib on S_eval to 0.0e+00 (re-confirms W5 CHECK 2 at use). S_eval
+  patient sha256 asserted == W5 manifest, so it is provably the identical surface.
+- S_eval: N=15,734, prevalence 0.1145. DCA on calibrated probs (p_t is an odds axis):
+  NB_model beats treat-all AND treat-none across the ENTIRE grid p_t∈[0.01,0.50]
+  (patient-grouped bootstrap 95% band, B=1000, seed=42).
+- Operating points (pre-declared budgets, no snooping): 5% → P 0.408 / R 0.178 / lift 3.56;
+  10% → P 0.360 / R 0.314; 20% → P 0.280 / R 0.488. Implied p_t 0.247 / 0.187 / 0.160.
+  Honest: ~0.67 AUROC caps recall (top-10% catches 31%, top-20% catches 49%).
+- CALIBRATION-INVARIANCE proven (becomes a test): precision@k(p_cal) == precision@k(p_raw)
+  to 0.0e+00 — isotonic monotone ⇒ identical worklist. Cal ties broken by raw score.
+  "Calibration changes displayed confidence and DCA, NOT who is on the worklist."
+- SURFACE-REUSE (documented, not hidden): S_eval selected the calibrator in W5; DCA inherits
+  negligible selection optimism (two-way near-tie 0.0264 vs 0.0272); precision@k/recall@k are
+  ranking-based ⇒ zero optimism. Reuse-with-documentation, not re-fragmenting.
+- Committed source of truth: `models/clinical/operating_points.json` (3 operating points,
+  full k-grid curve, DCA grid w/ CI, prevalence, S_eval hash, seed, versions, git sha,
+  surface-reuse note). NOT gitignored (`models/*.json` is one-level only). Phase-5 worklist
+  UI + alert-burden control read this; mlruns/ not load-bearing.
+- BRANCH NOTE: W5 (PR #1) is SQUASH-MERGED to main (`4654e4e`). W6 lives on
+  `feat/phase2-clinical-utility` (rebased `--onto main`), pushed, open as PR #2 against main.
+
+## NEXT: PHASE 2 / PHASE 3
+
+- Phase 2 Trust Layer I (calibration + clinical utility) COMPLETE. Cleanest performance
+  number still owed from an EXTERNAL set in Phase 8, not any internal surface.
+- Phase 3 (explainability/fairness): SHAP — interrogate `discharge_disposition_id`
+  (Phase-1 rank-2 by gain) to confirm legit risk signal, not an administrative proxy.
